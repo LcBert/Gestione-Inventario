@@ -15,6 +15,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(776, 591)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
@@ -31,9 +34,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.file1_lineEdit)
         self.file1_button = QtWidgets.QPushButton(self.centralwidget)
         self.file1_button.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/folder.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.file1_button.setIcon(icon)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icons/folder.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.file1_button.setIcon(icon1)
         self.file1_button.setObjectName("file1_button")
         self.horizontalLayout.addWidget(self.file1_button)
         self.gridLayout.addLayout(self.horizontalLayout, 0, 1, 1, 1)
@@ -45,9 +48,9 @@ class Ui_MainWindow(object):
         self.swap_button.setSizePolicy(sizePolicy)
         self.swap_button.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.swap_button.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/swap.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.swap_button.setIcon(icon1)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/icons/swap.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.swap_button.setIcon(icon2)
         self.swap_button.setIconSize(QtCore.QSize(32, 32))
         self.swap_button.setObjectName("swap_button")
         self.gridLayout.addWidget(self.swap_button, 0, 0, 2, 1)
@@ -58,7 +61,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.file2_lineEdit)
         self.file2_button = QtWidgets.QPushButton(self.centralwidget)
         self.file2_button.setText("")
-        self.file2_button.setIcon(icon)
+        self.file2_button.setIcon(icon1)
         self.file2_button.setObjectName("file2_button")
         self.horizontalLayout_2.addWidget(self.file2_button)
         self.gridLayout.addLayout(self.horizontalLayout_2, 1, 1, 1, 1)
@@ -72,6 +75,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Gestione Inventario"))
         self.create_button.setText(_translate("MainWindow", "Crea File"))
 import resources_rc
