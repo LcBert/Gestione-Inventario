@@ -96,6 +96,28 @@
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>776</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuApp">
+    <property name="title">
+     <string>App</string>
+    </property>
+    <addaction name="app_update_button"/>
+   </widget>
+   <addaction name="menuApp"/>
+  </widget>
+  <action name="app_update_button">
+   <property name="text">
+    <string>Update</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../static/resources.qrc"/>

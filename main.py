@@ -1,11 +1,37 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 from FileManager import File
 import pandas as pd
 
 import sys
 import os
+import tomllib
+
+import updater
 
 import MainWindow as MainWindow
+
+
+def _project_root_dir() -> str:
+    if getattr(sys, "frozen", False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+def _load_app_version() -> str:
+    pyproject_path = os.path.join(_project_root_dir(), "pyproject.toml")
+    try:
+        with open(pyproject_path, "rb") as f:
+            data = tomllib.load(f)
+        project = data.get("project", {})
+        version = str(project.get("version", "")).strip()
+        if version:
+            return version
+    except Exception:
+        pass
+    return "0.0.0"
+
+
+APP_VERSION = _load_app_version()
 
 
 class App(QMainWindow):
@@ -18,6 +44,7 @@ class App(QMainWindow):
         self.ui.file2_button.clicked.connect(self.getFile2)
         self.ui.swap_button.clicked.connect(self.swapFile)
         self.ui.create_button.clicked.connect(self.create)
+        self.ui.app_update_button.triggered.connect(self.update_app)
 
         self.considered_colums: list[str] = ["Codice", "Descrizione articolo", "Esistenza", "Prezzo", "Valore"]
 
@@ -121,8 +148,61 @@ class App(QMainWindow):
                 size = len(value)
         return size
 
+    def update_app(self):
+        # Check latest release synchronously, then hand off to a dedicated updater window.
+        self.ui.app_update_button.setEnabled(False)
+        owner = "LcBert"
+        repo = "Gestione-Inventario"
+        try:
+            latest_version, download_url, asset_name = updater.get_latest_release_asset(owner, repo)
+            has_update = updater.is_update_available(APP_VERSION, latest_version)
+            if not has_update:
+                QMessageBox.information(self, "Aggiornamento", "Ultima versione gia installata")
+                return
+
+            answer = QMessageBox.question(
+                self,
+                "Aggiornamento",
+                f"Installare l'ultima versione ({latest_version})?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.Yes,
+            )
+            if answer != QMessageBox.Yes:
+                return
+
+            QMessageBox.information(
+                self,
+                "Aggiornamento",
+                "L'app si chiudera e si aprira una finestra di aggiornamento.",
+            )
+            updater.launch_update_mode(download_url, latest_version, asset_name, APP_VERSION)
+            QApplication.quit()
+        except Exception as exc:
+            QMessageBox.warning(self, "Aggiornamento fallito", str(exc))
+        finally:
+            self.ui.app_update_button.setEnabled(True)
+
 
 if __name__ == "__main__":
+    if "--update-mode" in sys.argv:
+        args = sys.argv[1:]
+
+        def _value(flag: str, default: str = "") -> str:
+            if flag in args:
+                index = args.index(flag)
+                if index + 1 < len(args):
+                    return args[index + 1]
+            return default
+
+        download_url = _value("--download-url")
+        latest_version = _value("--latest-version")
+        asset_name = _value("--asset-name")
+        current_version = _value("--current-version", APP_VERSION)
+        if not download_url:
+            sys.exit(1)
+
+        sys.exit(updater.run_update_mode(download_url, latest_version, asset_name, current_version))
+
     app = QApplication(sys.argv)
     main_app = App()
     main_app.show()

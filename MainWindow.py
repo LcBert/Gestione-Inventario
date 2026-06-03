@@ -69,6 +69,16 @@ class Ui_MainWindow(object):
         self.create_button.setObjectName("create_button")
         self.gridLayout.addWidget(self.create_button, 2, 0, 1, 2)
         MainWindow.setCentralWidget(self.centralwidget)
+        self.menuBar = QtWidgets.QMenuBar(MainWindow)
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 776, 26))
+        self.menuBar.setObjectName("menuBar")
+        self.menuApp = QtWidgets.QMenu(self.menuBar)
+        self.menuApp.setObjectName("menuApp")
+        MainWindow.setMenuBar(self.menuBar)
+        self.app_update_button = QtWidgets.QAction(MainWindow)
+        self.app_update_button.setObjectName("app_update_button")
+        self.menuApp.addAction(self.app_update_button)
+        self.menuBar.addAction(self.menuApp.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -77,4 +87,6 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Gestione Inventario"))
         self.create_button.setText(_translate("MainWindow", "Crea File"))
+        self.menuApp.setTitle(_translate("MainWindow", "App"))
+        self.app_update_button.setText(_translate("MainWindow", "Update"))
 import resources_rc

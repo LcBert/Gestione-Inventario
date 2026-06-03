@@ -2,7 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Gestione Inventario"
-#define MyAppVersion "2.0"
+#ifndef MyAppVersion
+	#define MyAppVersion "0.0.0"
+#endif
 #define MyAppExeName "Gestione Inventario.exe"
 
 [Setup]
@@ -17,7 +19,7 @@ DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 OutputDir=.
-OutputBaseFilename=gestione-inventario2.0_setup
+OutputBaseFilename=gestione-inventario{#MyAppVersion}_setup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -31,6 +33,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "..\dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\pyproject.toml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\static\*"; DestDir: "{app}\static"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
