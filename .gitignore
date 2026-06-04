@@ -12,3 +12,9 @@ wheels/
 
 # Executable
 *.exe
+
+# Layout files
+MainWindow.py
+
+# Resources files
+resources_rc.py
