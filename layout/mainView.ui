@@ -167,6 +167,11 @@
     </item>
     <item row="2" column="0" colspan="2">
      <widget class="QPushButton" name="create_button">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
