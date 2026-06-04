@@ -14,7 +14,7 @@ wheels/
 *.exe
 
 # Layout files
-MainWindow.py
+main_window.py
 
 # Resources files
 resources_rc.py

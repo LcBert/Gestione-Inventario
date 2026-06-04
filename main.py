@@ -9,7 +9,7 @@ import webbrowser
 
 import updater
 
-import MainWindow as MainWindow
+import main_window
 
 
 def _project_root_dir() -> str:
@@ -47,7 +47,7 @@ APP_VERSION = _load_app_version()
 class App(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.ui = MainWindow.Ui_MainWindow()
+        self.ui = main_window.Ui_MainWindow()
         self.ui.setupUi(self)
         self.setFixedSize(500, 180)
 
