@@ -6,12 +6,17 @@ for %%A in (%*) do (
 	if /I "%%~A"=="-n" set "SKIP_PYINSTALLER=1"
 )
 
+set "APP_VERSION_FILE=app_version.py"
+set "APP_VERSION_BACKUP=app_version.py.bak"
+
+if exist "%APP_VERSION_FILE%" copy /y "%APP_VERSION_FILE%" "%APP_VERSION_BACKUP%" >nul
+
 for /f "usebackq tokens=2 delims== " %%v in (`findstr /r /c:"^[ ]*version[ ]*=" pyproject.toml`) do set "APP_VERSION=%%~v"
 if "%APP_VERSION%"=="" set "APP_VERSION=0.0.0"
 
 echo Build versione: %APP_VERSION%
 
-> app_version.py echo APP_VERSION = "%APP_VERSION%"
+> "%APP_VERSION_FILE%" echo APP_VERSION = "%APP_VERSION%"
 
 if "%SKIP_PYINSTALLER%"=="0" (
 	pyinstaller main.py --noconsole --onefile --name "Gestione Inventario" --icon static\icon.ico
@@ -42,4 +47,6 @@ if defined ISCC_EXE (
 	echo Esempio: set "ISCC_PATH=C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
 )
 
-if exist app_version.py del /f app_version.py
+if exist "%APP_VERSION_BACKUP%" (
+	move /y "%APP_VERSION_BACKUP%" "%APP_VERSION_FILE%" >nul
+)
