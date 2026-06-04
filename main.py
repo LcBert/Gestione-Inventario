@@ -49,6 +49,12 @@ class App(QMainWindow):
         super().__init__()
         self.ui = MainWindow.Ui_MainWindow()
         self.ui.setupUi(self)
+        self.setFixedSize(500, 180)
+
+        try:
+            self.setStyleSheet(File("style/main_window_style.css").read())
+        except FileNotFoundError:
+            print("StyleSheet file not found")
 
         self.ui.file1_button.clicked.connect(self.getFile1)
         self.ui.file2_button.clicked.connect(self.getFile2)

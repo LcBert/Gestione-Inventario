@@ -1,0 +1,91 @@
+/* Menu item styling */
+QMenuBar {
+    background-color: black;
+    border-bottom: 1px solid wheat;
+}
+
+QMenuBar::item {
+    background-color: black;
+    color: wheat;
+}
+
+QMenu {
+    background-color: black;
+}
+
+QMenu::item {
+    padding: 6px 20px;
+    background: transparent;
+    color: wheat;
+}
+
+QMenu::item:selected {
+    background: gray;
+    color: black;
+}
+
+QMenuBar::item:selected {
+    background: gray;
+    color: black;
+}
+
+QMenu:hover {
+    background-color: gray;
+    color: black;
+}
+
+#MainWindow {
+    background-color: black;
+}
+
+QLineEdit {
+    background-color: gray;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 16px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QPushButton {
+    background-color: gray;
+    border: 0px;
+    border-radius: 10px;
+}
+
+QPushButton:hover {
+    background-color: #a0a0a0;
+}
+
+QPushButton:pressed {
+    background-color: #505050;
+    color: white;
+}
+
+
+#create_button {
+    background-color: wheat;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    border: 2px solid black;
+}
+
+#create_button:hover {
+    background-color: rgb(226, 208, 173);
+}
+
+#create_button:pressed {
+    background-color: rgb(208, 189, 153);
+    color: black;
+}
+
+#swap_button {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+#file1_button,
+#file2_button {
+    padding: 3px;
+}
