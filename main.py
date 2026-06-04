@@ -5,6 +5,7 @@ import pandas as pd
 import sys
 import os
 import tomllib
+import webbrowser
 
 import updater
 
@@ -129,6 +130,8 @@ class App(QMainWindow):
                     values_f2.append(str(value))
 
             out_file.append(";".join(values_f1 + values_f2)+"\n")
+
+        webbrowser.open(out_path)
 
     def getFileLines(self, filename: str) -> list[str]:
         file_lines: list[str] = File(filename) .read().split("\n")
