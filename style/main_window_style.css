@@ -84,7 +84,9 @@ QMenu:hover {
     padding-right: 3px;
 }
 
-#centralwidget #file1_button,
-#centralwidget #file2_button {
+#centralwidget #file1_select_button,
+#centralwidget #file2_select_button,
+#centralwidget #file1_erase_button,
+#centralwidget #file2_erase_button {
     padding: 3px;
 }

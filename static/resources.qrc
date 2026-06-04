@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>erase.png</file>
     <file>icon.ico</file>
     <file>swap.png</file>
     <file>folder.png</file>

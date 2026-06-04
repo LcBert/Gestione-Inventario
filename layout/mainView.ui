@@ -44,7 +44,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="file1_button">
+       <widget class="QPushButton" name="file1_select_button">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
@@ -54,6 +54,23 @@
         <property name="icon">
          <iconset resource="../static/resources.qrc">
           <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="file1_erase_button">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../static/resources.qrc">
+          <normaloff>:/icons/erase.png</normaloff>:/icons/erase.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -110,7 +127,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="file2_button">
+       <widget class="QPushButton" name="file2_select_button">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
@@ -120,6 +137,23 @@
         <property name="icon">
          <iconset resource="../static/resources.qrc">
           <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="file2_erase_button">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../static/resources.qrc">
+          <normaloff>:/icons/erase.png</normaloff>:/icons/erase.png</iconset>
         </property>
         <property name="iconSize">
          <size>

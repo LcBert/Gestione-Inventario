@@ -60,15 +60,17 @@ class App(QMainWindow):
         except FileNotFoundError:
             print("StyleSheet file not found")
 
-        self.ui.file1_button.clicked.connect(lambda: self.getFile("file1"))
-        self.ui.file2_button.clicked.connect(lambda: self.getFile("file2"))
+        self.ui.file1_select_button.clicked.connect(lambda: self.getFile("file1"))
+        self.ui.file2_select_button.clicked.connect(lambda: self.getFile("file2"))
+        self.ui.file1_erase_button.clicked.connect(lambda: self.eraseFile("file1"))
+        self.ui.file2_erase_button.clicked.connect(lambda: self.eraseFile("file2"))
         self.ui.swap_button.clicked.connect(self.swapFile)
         self.ui.create_button.clicked.connect(self.create)
         self.ui.app_update_button.triggered.connect(self.update_app)
 
         self.considered_colums: list[str] = ["Codice", "Descrizione articolo", "Esistenza", "Prezzo", "Valore"]
 
-    def getFile(self, file: Literal["file1", "file2"]):
+    def getFile(self, file: Literal["file1", "file2"]) -> None:
         file_path, _ = QFileDialog.getOpenFileName(self, f"Select File {file[-1]}", "", "CSV Files (*.csv)")
         if (file_path):
             file_path = os.path.normpath(file_path)
@@ -80,6 +82,16 @@ class App(QMainWindow):
                 self.file2_path = file_path
                 self.ui.file2_label.setText(os.path.basename(file_path))
                 self.ui.file2_label.setToolTip(file_path)
+
+    def eraseFile(self, file: Literal["file1", "file2"]) -> None:
+        if (file == "file1"):
+            self.file1_path = ""
+            self.ui.file1_label.setText("")
+            self.ui.file1_label.setToolTip("")
+        elif (file == "file2"):
+            self.file2_path = ""
+            self.ui.file2_label.setText("")
+            self.ui.file2_label.setToolTip("")
 
     def swapFile(self):
         temp_text: str = self.ui.file1_label.text()
