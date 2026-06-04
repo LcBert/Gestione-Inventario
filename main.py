@@ -18,6 +18,15 @@ def _project_root_dir() -> str:
 
 
 def _load_app_version() -> str:
+    try:
+        from app_version import APP_VERSION as packaged_version
+
+        packaged_version = str(packaged_version).strip()
+        if packaged_version:
+            return packaged_version
+    except Exception:
+        pass
+
     pyproject_path = os.path.join(_project_root_dir(), "pyproject.toml")
     try:
         with open(pyproject_path, "rb") as f:

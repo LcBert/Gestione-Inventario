@@ -1,14 +1,23 @@
 @echo off
 setlocal
 
+set "SKIP_PYINSTALLER=0"
+for %%A in (%*) do (
+	if /I "%%~A"=="-n" set "SKIP_PYINSTALLER=1"
+)
+
 for /f "usebackq tokens=2 delims== " %%v in (`findstr /r /c:"^[ ]*version[ ]*=" pyproject.toml`) do set "APP_VERSION=%%~v"
 if "%APP_VERSION%"=="" set "APP_VERSION=0.0.0"
 
 echo Build versione: %APP_VERSION%
 
-pyinstaller main.py --noconsole --onefile --name "Gestione Inventario" --icon static\icon.ico
-if exist "Gestione Inventario.spec" del /f "Gestione Inventario.spec"
-if exist ".\build\" rmdir /s /q .\build\
+> app_version.py echo APP_VERSION = "%APP_VERSION%"
+
+if "%SKIP_PYINSTALLER%"=="0" (
+	pyinstaller main.py --noconsole --onefile --name "Gestione Inventario" --icon static\icon.ico
+	if exist "Gestione Inventario.spec" del /f "Gestione Inventario.spec"
+	if exist ".\build\" rmdir /s /q .\build\
+)
 
 where ISCC >nul 2>nul
 set "ISCC_EXE="
@@ -32,3 +41,5 @@ if defined ISCC_EXE (
 	echo Installa Inno Setup 6 oppure imposta ISCC_PATH con il percorso completo di ISCC.exe.
 	echo Esempio: set "ISCC_PATH=C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
 )
+
+if exist app_version.py del /f app_version.py
