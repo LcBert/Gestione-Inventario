@@ -67,31 +67,33 @@ class App(QMainWindow):
     def getFile1(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "Select File 1", "", "CSV Files (*.csv)")
         if file_path:
-            file_path = os.path.abspath(file_path)
+            file_path = os.path.normpath(file_path)
             self.file1_path = file_path
-            try:
-                self.ui.file1_lineEdit.setText(file_path)
-            except Exception:
-                pass
+            self.ui.file1_label.setText(os.path.basename(file_path))
+            self.ui.file1_label.setToolTip(file_path)
 
     def getFile2(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "Select File 2", "", "CSV Files (*.csv)")
         if file_path:
-            file_path = os.path.abspath(file_path)
+            file_path = os.path.normpath(file_path)
             self.file2_path = file_path
-            try:
-                self.ui.file2_lineEdit.setText(file_path)
-            except Exception:
-                pass
+            self.ui.file2_label.setText(os.path.basename(file_path))
+            self.ui.file2_label.setToolTip(file_path)
 
     def swapFile(self):
-        temp = self.ui.file1_lineEdit.text()
-        self.ui.file1_lineEdit.setText(self.ui.file2_lineEdit.text())
-        self.ui.file2_lineEdit.setText(temp)
+        temp_text: str = self.ui.file1_label.text()
+        self.ui.file1_label.setText(self.ui.file2_label.text())
+        self.ui.file2_label.setText(temp_text)
+
+        temp_tooltip: str = self.ui.file1_label.toolTip()
+        self.ui.file1_label.setToolTip(self.ui.file2_label.toolTip())
+        self.ui.file2_label.setToolTip(temp_tooltip)
+
+        self.file1_path, self.file2_path = self.file2_path, self.file1_path
 
     def create(self):
-        file1_lines: list[str] = self.getFileLines(self.ui.file1_lineEdit.text())
-        file2_lines: list[str] = self.getFileLines(self.ui.file2_lineEdit.text())
+        file1_lines: list[str] = self.getFileLines(self.file1_path)
+        file2_lines: list[str] = self.getFileLines(self.file2_path)
 
         file1_dict: dict[str, list] = self.getFileDict(file1_lines)
         file2_dict: dict[str, list] = self.getFileDict(file2_lines)
