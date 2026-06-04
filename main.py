@@ -6,6 +6,7 @@ import sys
 import os
 import tomllib
 import webbrowser
+from typing import Literal
 
 import updater
 
@@ -51,34 +52,34 @@ class App(QMainWindow):
         self.ui.setupUi(self)
         self.setFixedSize(500, 180)
 
+        self.file1_path: str = ""
+        self.file2_path: str = ""
+
         try:
             self.setStyleSheet(File("style/main_window_style.css").read())
         except FileNotFoundError:
             print("StyleSheet file not found")
 
-        self.ui.file1_button.clicked.connect(self.getFile1)
-        self.ui.file2_button.clicked.connect(self.getFile2)
+        self.ui.file1_button.clicked.connect(lambda: self.getFile("file1"))
+        self.ui.file2_button.clicked.connect(lambda: self.getFile("file2"))
         self.ui.swap_button.clicked.connect(self.swapFile)
         self.ui.create_button.clicked.connect(self.create)
         self.ui.app_update_button.triggered.connect(self.update_app)
 
         self.considered_colums: list[str] = ["Codice", "Descrizione articolo", "Esistenza", "Prezzo", "Valore"]
 
-    def getFile1(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, "Select File 1", "", "CSV Files (*.csv)")
-        if file_path:
+    def getFile(self, file: Literal["file1", "file2"]):
+        file_path, _ = QFileDialog.getOpenFileName(self, f"Select File {file[-1]}", "", "CSV Files (*.csv)")
+        if (file_path):
             file_path = os.path.normpath(file_path)
-            self.file1_path = file_path
-            self.ui.file1_label.setText(os.path.basename(file_path))
-            self.ui.file1_label.setToolTip(file_path)
-
-    def getFile2(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, "Select File 2", "", "CSV Files (*.csv)")
-        if file_path:
-            file_path = os.path.normpath(file_path)
-            self.file2_path = file_path
-            self.ui.file2_label.setText(os.path.basename(file_path))
-            self.ui.file2_label.setToolTip(file_path)
+            if (file == "file1"):
+                self.file1_path = file_path
+                self.ui.file1_label.setText(os.path.basename(file_path))
+                self.ui.file1_label.setToolTip(file_path)
+            elif (file == "file2"):
+                self.file2_path = file_path
+                self.ui.file2_label.setText(os.path.basename(file_path))
+                self.ui.file2_label.setToolTip(file_path)
 
     def swapFile(self):
         temp_text: str = self.ui.file1_label.text()
@@ -91,7 +92,33 @@ class App(QMainWindow):
 
         self.file1_path, self.file2_path = self.file2_path, self.file1_path
 
+    def validate_files(self) -> bool:
+        if (self.file1_path == "" or self.file2_path == ""):
+            QMessageBox().warning(self, "Attenzione", "Seleziona i file prima di continuare")
+            return False
+
+        if (not os.path.exists(self.file1_path)):
+            QMessageBox().warning(self, "Attenzione", f"Il file {self.file1_path} non esiste")
+            return False
+
+        if (not os.path.exists(self.file2_path)):
+            QMessageBox().warning(self, "Attenzione", f"Il file {self.file2_path} non esiste")
+            return False
+
+        if (not os.path.isfile(self.file1_path)):
+            QMessageBox().warning(self, "Attenzione", f"{self.file1_path} non è un file")
+            return False
+
+        if (not os.path.isfile(self.file2_path)):
+            QMessageBox().warning(self, "Attenzione", f"{self.file2_path} non è un file")
+            return False
+
+        return True
+
     def create(self):
+        if (not self.validate_files()):
+            return
+
         file1_lines: list[str] = self.getFileLines(self.file1_path)
         file2_lines: list[str] = self.getFileLines(self.file2_path)
 

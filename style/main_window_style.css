@@ -38,7 +38,7 @@ QMenu:hover {
     background-color: black;
 }
 
-QLabel {
+#centralwidget QLabel {
     background-color: gray;
     border-radius: 10px;
     font-size: 16px;
@@ -46,23 +46,23 @@ QLabel {
     min-height: 25px;
 }
 
-QPushButton {
+#centralwidget QPushButton {
     background-color: gray;
     border: 0px;
     border-radius: 10px;
 }
 
-QPushButton:hover {
+#centralwidget QPushButton:hover {
     background-color: #a0a0a0;
 }
 
-QPushButton:pressed {
+#centralwidget QPushButton:pressed {
     background-color: #505050;
     color: white;
 }
 
 
-#create_button {
+#centralwidget #create_button {
     background-color: wheat;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -70,21 +70,21 @@ QPushButton:pressed {
     border: 2px solid black;
 }
 
-#create_button:hover {
+#centralwidget #create_button:hover {
     background-color: rgb(226, 208, 173);
 }
 
-#create_button:pressed {
+#centralwidget #create_button:pressed {
     background-color: rgb(208, 189, 153);
     color: black;
 }
 
-#swap_button {
+#centralwidget #swap_button {
     padding-left: 3px;
     padding-right: 3px;
 }
 
-#file1_button,
-#file2_button {
+#centralwidget #file1_button,
+#centralwidget #file2_button {
     padding: 3px;
 }
